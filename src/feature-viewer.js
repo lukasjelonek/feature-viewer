@@ -110,7 +110,6 @@ var FeatureViewer = (function () {
             var tooltipDiv;
             var selectedRect;
             var bodyNode = d3.select(div).node();
-            var tooltipColor = options.tooltipColor ? options.tooltipColor : "orangered";
 
             function tooltip(selection) {
 
@@ -123,50 +122,43 @@ var FeatureViewer = (function () {
                     if (rightside) {
                         tooltipDiv = d3.select(div)
                             .append('div')
-                            .attr('class', 'tooltip3');
+                            .attr('class', 'tooltip-right');
                     } else {
                         tooltipDiv = d3.select(div)
                             .append('div')
-                            .attr('class', 'tooltip2');
+                            .attr('class', 'tooltip-left');
                         tooltipDiv.style({
                             left: (absoluteMousePos[0] - 15) + 'px'
                         });
                     }
                     tooltipDiv.style({
                         bottom: (bodyNode.offsetHeight - absoluteMousePos[1] + 16) + 'px',
-                        'background-color': '#eee',
-                        width: 'auto',
-                        'max-width': '170px',
-                        height: 'auto',
-                        'max-height': '68px',
-                        padding: '5px',
-                        "font": '10px sans-serif',
-                        'text-align': 'center',
                         position: 'absolute',
                         'z-index': 45,
                         'box-shadow': '0 1px 2px 0 #656565' 
                     });
+                    
                     if (object.type === "path") {
-                        var first_line = '<p style="margin:2px;font-weight:700;color:' + tooltipColor +'">' + pD[0].x + '&#x256d;&#x256e;' + pD[1].x + '</p>';
-                        if (pD.description) var second_line = '<p style="margin:2px;color:' + tooltipColor +';font-size:9px">' + pD.description + '</p>';
+                        var first_line = '<p>' + pD[0].x + '&#x256d;&#x256e;' + pD[1].x + '</p>';
+                        if (pD.description) var second_line = '<p>' + pD.description + '</p>';
                         else var second_line = '';
                     } else if (object.type === "line") {
                         var elemHover = updateLineTooltip(absoluteMousePos[0],pD);
                         if (elemHover.description) {
-                            var first_line = '<p style="margin:2px;font-weight:700;color:' + tooltipColor +'">' + elemHover.x + ' : <span> ' + elemHover.y + '</span></p>';
-                            var second_line = '<p style="margin:2px;color:' + tooltipColor +';font-size:9px">' + elemHover.description + '</p>';
+                            var first_line = '<p>' + elemHover.x + ' : <span> ' + elemHover.y + '</span></p>';
+                            var second_line = '<p>' + elemHover.description + '</p>';
                         }
                         else {
-                            var first_line = '<p style="margin:2px;color:' + tooltipColor +'">position : <span id="tLineX">' + elemHover.x + '</span></p>';
-                            var second_line = '<p style="margin:2px;color:' + tooltipColor +'">count : <span id="tLineC">' + elemHover.y + '</span></p>';
+                            var first_line = '<p>position : <span id="tLineX">' + elemHover.x + '</span></p>';
+                            var second_line = '<p>count : <span id="tLineC">' + elemHover.y + '</span></p>';
                         }
                     } else if (object.type === "unique" || pD.x === pD.y) {
-                        var first_line = '<p style="margin:2px;font-weight:700;color:' + tooltipColor +'">' + pD.x + '</p>';
-                        if (pD.description) var second_line = '<p style="margin:2px;color:' + tooltipColor +';font-size:9px">' + pD.description + '</p>';
+                        var first_line = '<p>' + pD.x + '</p>';
+                        if (pD.description) var second_line = '<p>' + pD.description + '</p>';
                         else var second_line = '';
                     } else {
-                        var first_line = '<p style="margin:2px;font-weight:700;color:' + tooltipColor +'">' + pD.x + ' - ' + pD.y + '</p>';
-                        if (pD.description) var second_line = '<p style="margin:2px;color:' + tooltipColor +';font-size:9px">' + pD.description + '</p>';
+                        var first_line = '<p>' + pD.x + ' - ' + pD.y + '</p>';
+                        if (pD.description) var second_line = '<p>' + pD.description + '</p>';
                         else var second_line = '';
                     }
 
@@ -183,16 +175,14 @@ var FeatureViewer = (function () {
                             var absoluteMousePos = d3.mouse(bodyNode);
                             var elemHover = updateLineTooltip(absoluteMousePos[0],pD);
                             if (elemHover.description) {
-                                var first_line = '<p style="margin:2px;color:' + tooltipColor +'">' + elemHover.x + ' : <span> ' + elemHover.y + '</span></p>';
-                                var second_line = '<p style="margin:2px;color:' + tooltipColor +';font-size:9px">' + elemHover.description + '</p>';
+                                var first_line = '<p>' + elemHover.x + ' : <span> ' + elemHover.y + '</span></p>';
+                                var second_line = '<p>' + elemHover.description + '</p>';
                             }
                             else {
-                                var first_line = '<p style="margin:2px;color:' + tooltipColor +'">position : <span id="tLineX">' + elemHover.x + '</span></p>';
-                                var second_line = '<p style="margin:2px;color:' + tooltipColor +'">count : <span id="tLineC">' + elemHover.y + '</span></p>';
+                                var first_line = '<p>position : <span id="tLineX">' + elemHover.x + '</span></p>';
+                                var second_line = '<p>count : <span id="tLineC">' + elemHover.y + '</span></p>';
                             }
                             tooltipDiv.html(first_line + second_line);
-//                            $('#tLineX').text(elemHover.x);
-//                            $('#tLineC').text(elemHover.y);  
                         }
                         // Move tooltip
                         // IE 11 sometimes fires mousemove before mouseover
@@ -200,13 +190,13 @@ var FeatureViewer = (function () {
                         var absoluteMousePos = d3.mouse(bodyNode);
                         var rightside = (absoluteMousePos[0] > width);
                         if (rightside) {
-                            tooltipDiv.attr("class", "tooltip3");
+                            tooltipDiv.attr("class", "tooltip1 tooltip-right");
                             tooltipDiv.style({
                                 left: (absoluteMousePos[0] + 10 - (tooltipDiv.node().getBoundingClientRect().width)) + 'px',
                                 bottom: (bodyNode.offsetHeight - absoluteMousePos[1] + 16) + 'px'
                             });
                         } else {
-                            tooltipDiv.attr("class", "tooltip2");
+                            tooltipDiv.attr("class", "tooltip1 tooltip-left");
                             tooltipDiv.style({
                                 left: (absoluteMousePos[0] - 15) + 'px',
                                 bottom: (bodyNode.offsetHeight - absoluteMousePos[1] + 16) + 'px'

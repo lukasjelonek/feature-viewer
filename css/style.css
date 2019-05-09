@@ -46,21 +46,19 @@ a:focus {
     line-height: 1;
     font-weight: bold;
     padding: 12px;
-/*    background: rgba(0, 0, 0, 0.8);*/
     background: #eee;
-/*    color: #fff;*/
     color: black;
     border-radius: 2px;
 }
 
 /*Creates a small triangle extender for the tooltip - left*/
-.tooltip2:after {
+.tooltip-left:after {
     box-sizing: border-box;
     display: inline;
     font-size: 10px;
     width: 100%;
     line-height: 1;
-    color: #eee;
+    color: black;
     content: "\25BC";
     position: absolute;
     text-align: left;
@@ -70,7 +68,7 @@ a:focus {
     z-index:11;
 }
 /*Creates a small triangle extender for the tooltip - left */
-.tooltip2:before {
+.tooltip-left:before {
     box-sizing: border-box;
     display: inline;
     font-size: 10px;
@@ -85,7 +83,7 @@ a:focus {
     left: 10px;
     z-index:10;
 }
-.tooltip3:after {
+.tooltip-right:after {
     box-sizing: border-box;
     display: inline;
     font-size: 10px;
@@ -100,7 +98,7 @@ a:focus {
     right: 10px;
     z-index:11;
 }
-.tooltip3:before {
+.tooltip-right:before {
     box-sizing: border-box;
     display: inline;
     font-size: 10px;
@@ -121,11 +119,6 @@ a:focus {
 }
 
 .header-help{
-/*    color: #C50063;*/
-/*
-    color: #108D9F;
-    border-color:#0F8292;
-*/
 }
 .header-help .state{
     min-width:26px;
@@ -133,27 +126,18 @@ a:focus {
 }
 
 .header-help:hover{
-/*    color: #98004C;*/
-/*    color: #0F8292;*/
     cursor: pointer;
     text-decoration: none;
 }
 
 .header-help:focus{
-/*    color: #0F8292;*/
 }
 
 .popover-title{
     text-align: center;
-/*    background-color: rgba(197, 0, 99, 0.1);*/
 }
 
 .label-as-badge {
-/*
-    border-radius: 1em;
-    font-size:0.7em;
-*/
-/*    background-color: #C50063;*/
 }
 
 path.domain {
@@ -163,3 +147,22 @@ path.domain {
 rect{
     rx:2;
 }
+
+.tooltip1 {
+    background-color: black;
+    width: auto;
+    max-width: 170px;
+    height: auto;
+    max-height: 68px;
+    padding: 5px;
+    font: 10px sans-serif;
+    text-align: center;
+    box-shadow: 0 1px 2px 0 #656565;
+    color: white;
+}
+
+.tooltip1 p {
+    color: white;
+    margin: 2px;
+}
+
