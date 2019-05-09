@@ -22,8 +22,12 @@ var FeatureViewer = (function () {
             showSequence: false,
             brushActive: false,
             verticalLine: false,
-            dottedSequence: true
+            dottedSequence: true,
+            arrowWidth: 105,
         };
+        if ('arrowWidth' in options) {
+            SVGOptions.arrowWidth = options.arrowWidth
+        }
         var offset = {start:1,end:fvLength};
         if (options && options.offset) {
             offset = options.offset;
@@ -75,7 +79,7 @@ var FeatureViewer = (function () {
                 top: 10,
                 right: 20,
                 bottom: 20,
-                left: 110
+                left: SVGOptions.arrowWidth+5
             },
             width = $(div).width() - margin.left - margin.right - 17,
             height = 600 - margin.top - margin.bottom;
@@ -503,14 +507,14 @@ var FeatureViewer = (function () {
                 .style("stroke", "") // colour the line
                 .style("fill", "#DFD5D3") // remove any fill colour
                 .attr("points", function (d) {
-                    return (margin.left - 105) + "," + (d.y - 3) + ", " + (margin.left - 105) + "," + (d.y + 12) + ", " + (margin.left - 15) + "," + (d.y + 12) + ", " + (margin.left - 7) + "," + (d.y + 4.5) + ", " + (margin.left - 15) + "," + (d.y -3); // x,y points
+                    return (margin.left - SVGOptions.arrowWidth) + "," + (d.y - 3) + ", " + (margin.left - SVGOptions.arrowWidth) + "," + (d.y + 12) + ", " + (margin.left - 15) + "," + (d.y + 12) + ", " + (margin.left - 7) + "," + (d.y + 4.5) + ", " + (margin.left - 15) + "," + (d.y -3); // x,y points
                 });
             yAxisSVGgroup
                 .append("text")
                 .attr("class", "yaxis")
                 .attr("text-anchor", "start")
                 .attr("x", function () {
-                    return margin.left - 102
+                    return margin.left - SVGOptions.arrowWidth + 8
                 })
                 .attr("y", function (d) {
                     return d.y + 8
