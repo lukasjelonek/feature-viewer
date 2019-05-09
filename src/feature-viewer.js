@@ -137,32 +137,35 @@ var FeatureViewer = (function () {
                         'z-index': 45,
                         'box-shadow': '0 1px 2px 0 #656565' 
                     });
-                    
-                    if (object.type === "path") {
-                        var first_line = '<p>' + pD[0].x + '&#x256d;&#x256e;' + pD[1].x + '</p>';
-                        if (pD.description) var second_line = '<p>' + pD.description + '</p>';
-                        else var second_line = '';
-                    } else if (object.type === "line") {
-                        var elemHover = updateLineTooltip(absoluteMousePos[0],pD);
-                        if (elemHover.description) {
-                            var first_line = '<p>' + elemHover.x + ' : <span> ' + elemHover.y + '</span></p>';
-                            var second_line = '<p>' + elemHover.description + '</p>';
-                        }
-                        else {
-                            var first_line = '<p>position : <span id="tLineX">' + elemHover.x + '</span></p>';
-                            var second_line = '<p>count : <span id="tLineC">' + elemHover.y + '</span></p>';
-                        }
-                    } else if (object.type === "unique" || pD.x === pD.y) {
-                        var first_line = '<p>' + pD.x + '</p>';
-                        if (pD.description) var second_line = '<p>' + pD.description + '</p>';
-                        else var second_line = '';
+                    if ('tooltip' in pD) {
+                        tooltipDiv.html(pD.tooltip)
                     } else {
-                        var first_line = '<p>' + pD.x + ' - ' + pD.y + '</p>';
-                        if (pD.description) var second_line = '<p>' + pD.description + '</p>';
-                        else var second_line = '';
+                        if (object.type === "path") {
+                            var first_line = '<p>' + pD[0].x + '&#x256d;&#x256e;' + pD[1].x + '</p>';
+                            if (pD.description) var second_line = '<p>' + pD.description + '</p>';
+                            else var second_line = '';
+                        } else if (object.type === "line") {
+                            var elemHover = updateLineTooltip(absoluteMousePos[0],pD);
+                            if (elemHover.description) {
+                                var first_line = '<p>' + elemHover.x + ' : <span> ' + elemHover.y + '</span></p>';
+                                var second_line = '<p>' + elemHover.description + '</p>';
+                            }
+                            else {
+                                var first_line = '<p>position : <span id="tLineX">' + elemHover.x + '</span></p>';
+                                var second_line = '<p>count : <span id="tLineC">' + elemHover.y + '</span></p>';
+                            }
+                        } else if (object.type === "unique" || pD.x === pD.y) {
+                            var first_line = '<p>' + pD.x + '</p>';
+                            if (pD.description) var second_line = '<p>' + pD.description + '</p>';
+                            else var second_line = '';
+                        } else {
+                            var first_line = '<p>' + pD.x + ' - ' + pD.y + '</p>';
+                            if (pD.description) var second_line = '<p>' + pD.description + '</p>';
+                            else var second_line = '';
+                        }
+                        tooltipDiv.html(first_line + second_line);
                     }
 
-                    tooltipDiv.html(first_line + second_line);
                     if (rightside) {
                         tooltipDiv.style({
                             left: (absoluteMousePos[0] + 10 - (tooltipDiv.node().getBoundingClientRect().width)) + 'px'
