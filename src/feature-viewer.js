@@ -348,28 +348,37 @@ var FeatureViewer = (function () {
         };
 
         function addLevel(array) {
-            var leveling = [];
-            array.forEach(function (d) {
-                if (leveling === []) {
-                    leveling.push(d.y);
-                    d.level = 0;
-                } else {
-                    var placed = false;
-                    for (var k = 0; k < leveling.length; k++) {
-                        if (d.x - leveling[k] > 0 ) {
-                            placed = true;
-                            d.level = k;
-                            leveling[k] = d.y;
-                            break;
+            if ('singleLine' in options && options.singleLine) {
+                let levels = 0
+                array.forEach(function (d) {
+                    d.level = levels
+                    levels++
+                });
+                return levels;
+            } else {
+                var leveling = [];
+                array.forEach(function (d) {
+                    if (leveling === []) {
+                        leveling.push(d.y);
+                        d.level = 0;
+                    } else {
+                        var placed = false;
+                        for (var k = 0; k < leveling.length; k++) {
+                            if (d.x - leveling[k] > 0 ) {
+                                placed = true;
+                                d.level = k;
+                                leveling[k] = d.y;
+                                break;
+                            }
+                        }
+                        if (placed === false) {
+                            leveling.push(d.y);
+                            d.level = leveling.length - 1;
                         }
                     }
-                    if (placed === false) {
-                        leveling.push(d.y);
-                        d.level = leveling.length - 1;
-                    }
-                }
-            });
-            return leveling.length;
+                });
+                return leveling.length;
+            }
         }
 
 
