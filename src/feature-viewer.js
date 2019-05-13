@@ -104,7 +104,7 @@ var FeatureViewer = (function () {
             }
             return elemHover;
         }
-        
+                
         d3.helper = {};
 
         d3.helper.tooltip = function (object) {
@@ -349,10 +349,10 @@ var FeatureViewer = (function () {
 
         function addLevel(array) {
             if ('singleLine' in options && options.singleLine) {
-                let levels = 0
+                var levels = 0;
                 array.forEach(function (d) {
-                    d.level = levels
-                    levels++
+                    d.level = levels;
+                    levels++;
                 });
                 return levels;
             } else {
