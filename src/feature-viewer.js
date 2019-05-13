@@ -359,7 +359,7 @@ var FeatureViewer = (function () {
                 } else {
                     var placed = false;
                     for (var k = 0; k < leveling.length; k++) {
-                        if (d.x > leveling[k]) {
+                        if (d.x - leveling[k] > 0 ) {
                             placed = true;
                             d.level = k;
                             leveling[k] = d.y;
