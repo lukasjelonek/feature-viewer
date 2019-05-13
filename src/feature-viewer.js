@@ -1,16 +1,13 @@
 var FeatureViewer = (function () {
 
     function FeatureViewer(sequence, div, options) {
-//        var nxSeq = sequence.startsWith('NX_') ? true : false;
         var self = this;
-        // if (!div) var div = window;
         this.events = {
           FEATURE_SELECTED_EVENT: "feature-viewer-position-selected",
             FEATURE_DESELECTED_EVENT: "feature-viewer-position-deselected",
           ZOOM_EVENT: "feature-viewer-zoom-altered"
         };
 
-        // if (!div) var div = window;
         var div = div;
         var el = document.getElementById(div.substring(1));
         var svgElement;
@@ -375,31 +372,6 @@ var FeatureViewer = (function () {
             return leveling.length;
         }
 
-        function addLevelToBond(array) {
-            var leveling = [];
-            var newArray = [];
-            array.forEach(function (d) {
-                if (leveling === []) {
-                    leveling.push(d[2].x);
-                    d[1].y = 1;
-                } else {
-                    var placed = false;
-                    for (var k = 0; k < leveling.length; k++) {
-                        if (d[0].x > leveling[k]) {
-                            placed = true;
-                            d[1].y = k + 1;
-                            leveling[k] = d[2].x;
-                            break;
-                        }
-                    }
-                    if (placed === false) {
-                        leveling.push(d[2].x);
-                        d[1].y = leveling.length;
-                    }
-                }
-            });
-            return leveling.length;
-        }
 
         var lineBond = d3.svg.line()
             .interpolate("step-before")
@@ -718,13 +690,11 @@ var FeatureViewer = (function () {
                 }
             },
             rectangle: function (object, position) {
-                //var rectShift = 20;
                 if (!object.height) object.height = 12;
                 var rectHeight = object.height;
                 
                 var rectShift = rectHeight + rectHeight/3;
                 var lineShift = rectHeight/2 - 6;
-//                var lineShift = rectHeight/2 - 6;
 
                 var rectsPro = svgContainer.append("g")
                     .attr("class", "rectangle")
@@ -797,21 +767,6 @@ var FeatureViewer = (function () {
                         } else return "hidden";
                     })
                     .call(d3.helper.tooltip(object));
-
-
-                //rectsPro.selectAll("." + object.className)
-                //    .data(object.data)
-                //    .enter()
-                //    .append("rect")
-                //    .attr("clip-path", "url(#clip)")
-                //    .attr("class", "element "+object.className)
-                //    .attr("id", function(d) { return "f"+d.id })
-                //    .attr("x", X)
-                //    .attr("width", rectWidth)
-                //    .attr("height", 12)
-                //    .style("fill", object.color)
-                //    .style("z-index", "13")
-                //    .call(d3.helper.tooltip(object));
 
                 forcePropagation(rectsProGroup);
                 var uniqueShift = rectHeight > 12 ? rectHeight - 6 : 0;
@@ -946,7 +901,6 @@ var FeatureViewer = (function () {
                     .style("stroke", object.color[i] || "#000")
                     .style("z-index", "3")
                     .style("stroke-width", "2px")
-//                    .style("shape-rendering", "crispEdges")
                     .call(d3.helper.tooltip(object));
                 })
                 
@@ -1064,7 +1018,6 @@ var FeatureViewer = (function () {
                 var transit;
                 if (animation) {
                     transit1 = svgContainer.selectAll("." + object.className + "Group")
-    //                    .data(object.data)
                         .transition()
                         .duration(500);
                     transit2 = svgContainer.selectAll("." + object.className)
@@ -1090,9 +1043,7 @@ var FeatureViewer = (function () {
             },
             multiRec: function (object) {
                 svgContainer.selectAll("." + object.className)
-//                    .data(object.data)
-                    //.transition()
-                    //.duration(500)
+
                     .attr("x", function (d) {
                         return scaling(d.x)
                     })
@@ -1108,7 +1059,6 @@ var FeatureViewer = (function () {
                 var transit;
                 if (animation) {
                     transit = svgContainer.selectAll("." + object.className)
-    //                    .data(object.data)
                         .transition()
                         .duration(500);
                 }
@@ -1116,9 +1066,6 @@ var FeatureViewer = (function () {
                     transit = svgContainer.selectAll("." + object.className);
                 }
                 transit
-//                    .data(object.data)
-                    //.transition()
-                    //.duration(500)
                     .attr("x", function (d) {
                         return scaling(d.x - 0.4)
                     })
@@ -1139,7 +1086,6 @@ var FeatureViewer = (function () {
                 var transit;
                 if (animation) {
                     transit = svgContainer.selectAll("." + object.className)
-    //                    .data(object.data)
                         .transition()
                         .duration(500);
                 }
@@ -1160,7 +1106,6 @@ var FeatureViewer = (function () {
                 var transit;
                 if (animation) {
                     transit = svgContainer.selectAll("." + object.className)
-    //                    .data(object.data)
                         .transition()
                         .duration(500);
                 }
@@ -1179,7 +1124,6 @@ var FeatureViewer = (function () {
                 var transit;
                 if (animation) {
                     transit = svgContainer.selectAll("." + object.className)
-    //                    .data(object.data)
                         .transition()
                         .duration(500);
                 }
@@ -1195,7 +1139,6 @@ var FeatureViewer = (function () {
 
         var brush = d3.svg.brush()
             .x(scaling)
-            //.on("brush", brushmove)
             .on("brushend", brushend);
 
         function addBrush() {
@@ -1248,7 +1191,6 @@ var FeatureViewer = (function () {
                 var zoomScale = (fvLength / extentLength).toFixed(1);
                 $(div + " .zoomUnit").text(zoomScale.toString());
                 
-//                scaling.range([5,width-5]); 
                 if (SVGOptions.showSequence && !(intLength) && seq && svgContainer.selectAll(".AA").empty()) {
                     current_extend = { 
                     length : extentLength,
@@ -1261,7 +1203,6 @@ var FeatureViewer = (function () {
                 }
 
                 //modify scale
-//                scaling.range([5,width-5]);
                 scaling.domain(extent);
                 scalingPosition.range(extent);
                 var currentShift = seqShift ? seqShift : offset.start;
@@ -1282,14 +1223,12 @@ var FeatureViewer = (function () {
                             zoom: zoomScale
                         });
 
-                //rectsPep2.classed("selected", false);
                 d3.select(div).selectAll(".brush").call(brush.clear());
             } else {
                 d3.select(div).selectAll(".brush").call(brush.clear());
-                //resetAll();
             }
         }
-//        
+
         var resizeCallback = function(){
             
             updateWindow();
@@ -1298,9 +1237,6 @@ var FeatureViewer = (function () {
         $(window).on("resize", resizeCallback);
         
         function updateWindow(){
-//            var new_width = $(div).width() - margin.left - margin.right - 17;
-//            var width_larger = (width < new_width);
-            
             width = $(div).width() - margin.left - margin.right - 17;
             d3.select(div+" svg")
                 .attr("width", width + margin.left + margin.right);
@@ -1310,7 +1246,6 @@ var FeatureViewer = (function () {
             }
             d3.select(div).selectAll(".brush").call(brush.clear());
             
-//            var currentSeqLength = svgContainer.selectAll(".AA").size();
             var seq = displaySequence(current_extend.length);
             if (SVGOptions.showSequence && !(intLength)){
                 if (seq === false && !svgContainer.selectAll(".AA").empty()) {
@@ -1412,7 +1347,6 @@ var FeatureViewer = (function () {
                 .style("width", "1px")
                 .style("height", (Yposition + 50) + "px")
                 .style("top", "30px")
-                // .style("left", "0px")
                 .style("background", "#000");
 
             d3.select(".chart")
@@ -1420,10 +1354,7 @@ var FeatureViewer = (function () {
                     mousex = d3.mouse(this)[0] - 2;
                     vertical.style("left", mousex + "px")
                 });
-            //.on("click", function(){
-            //    mousex = d3.mouse(this);
-            //    mousex = mousex[0] + 5;
-            //    vertical.style("left", mousex + "px")});
+
         }
 
         this.addRectSelection = function (svgId) {
@@ -1511,8 +1442,6 @@ var FeatureViewer = (function () {
                 
                 var headerOptions = $(div + " .svgHeader").length ? d3.select(div + " .svgHeader") : d3.select(div).append("div").attr("class", "svgHeader");
                 
-//                if (options.toolbarTemplate && options.toolbarTemplate === 2) {
-
                     if (!$(div + ' .header-position').length) {
                         var headerPosition = headerOptions
                             .append("div")
@@ -1569,89 +1498,17 @@ var FeatureViewer = (function () {
                             .attr("class", "zoomUnit")
                             .text("1");
                     }
-//                }
-//                else{
-//                    if (!$(div + ' .header-zoom').length) {
-//                        var headerZoom = headerOptions
-//                            .append("div")
-//                            .attr("class", "panel panel-default header-zoom")
-//                            .style("display", "inline-block")
-//                            .style("width", "150px")
-//                            .style("margin", "20px 0px 0px")
-//                            .style("padding", "0px");
-//                        headerZoom
-//                            .append("div")
-//                            .attr("class", "panel-heading")
-//                            .style("padding", "0px 15px")
-//                            .style("border-right", "1px solid #DDD")
-//                            .style("display", "inline-block")
-//                            .style("width", "80px")
-//                            .append("h5")
-//                            .style("padding", "0px")
-//                            .style("height", "10px")
-//                            .style("color", "#777")
-//                            .text("ZOOM");
-//                        headerZoom
-//                            .append("div")
-//                            .attr("class", "panel-body")
-//                            .style("display", "inline-block")
-//                            .style("padding", "0px")
-//                            .append("h5")
-//                            .style("padding-left", "15px")
-//                            .style("height", "10px")
-//                            .text("x ")
-//                            .append("span")
-//                            .attr("class", "zoomUnit")
-//                            .text("1");
-//                    }
-//                    if (!$(div + ' .header-position').length) {
-//                        var headerPosition = headerOptions
-//                            .append("div")
-//                            .attr("class", "panel panel-default header-position")
-//                            .style("display", "inline-block")
-//                            .style("width", "175px")
-//                            .style("margin", "20px 20px 0px")
-//                            .style("padding", "0px");
-//                        headerPosition
-//                            .append("div")
-//                            .attr("class", "panel-heading")
-//                            .style("padding", "0px 15px")
-//                            .style("border-right", "1px solid #DDD")
-//                            .style("display", "inline-block")
-//                            .append("h5")
-//                            .style("padding", "0px")
-//                            .style("height", "10px")
-//                            .style("color", "#777")
-//                            .text("POSITION");
-//                        headerPosition
-//                            .append("div")
-//                            .attr("class", "panel-body")
-//                            .style("display", "inline-block")
-//                            .style("padding", "0px")
-//                            .append("h5")
-//                            .style("padding-left", "15px")
-//                            .style("height", "10px")
-//                            .append("span")
-//                            .attr("id", "zoomPosition")
-//                            .text("0");
-//                    }
-//                }
                 var headerZoom = $(div + ' .header-zoom').length ? d3.select(div + ' .header-zoom') : headerOptions;
                 if (options.bubbleHelp === true) {
                     if (!$(div + ' .header-help').length) {
                         var helpContent = "<div><strong>To zoom in :</strong> Left click to select area of interest</div>" +
                             "<div><strong>To zoom out :</strong> Right click to reset the scale</div>" +
                             "<div><strong>Zoom max  :</strong> Limited to <strong>" + zoomMax.toString() + " " + options.unit +"</strong></div>";
-//                        var headerHelp = headerOptions
                         var headerHelp = headerZoom
                             .append("div")
-//                            .insert("div",":first-child")
-//                            .attr("class", "pull-right")
                             .style("display", "inline-block")
-//                            .style("margin", "15px 35px 0px 0px")
                             .style("margin", "0px")
                             .style("margin-right", "5px")
-//                            .style("line-height","32px")
                             .style("padding", "0px");
                         var buttonHelp = headerHelp
                             .append("a")
@@ -1662,21 +1519,13 @@ var FeatureViewer = (function () {
                             .attr("title", "Help")
                             .attr("data-content", helpContent)
                             .style("font-size", "14px");
-//                            .style("margin-bottom", "2px");
                         buttonHelp
                             .append("span")
                             .attr("class", "label label-as-badge label-info")
                             .style("font-weight","500")
-//                            .style("border-radius","3px")
                             .style("border-radius","3px")
-//                            .style("background-color","#f8f8f8")
-//                            .style("background-color","#108D9F")
-//                            .style("border","1px solid #ddd")
-//                            .style("border","1px solid #0C6B78")
-//                            .style("color","#777")
                             .style("box-shadow","inset 0px 0px 4px rgba(0,0,0,0.10)")
                             .style("color","#fff")
-//                            .style("padding","2px 6px")
                             .html("<span class='state'>Show</span> help");
                         $(function () {
                             $('[data-toggle="popover"]').popover({html: true});
