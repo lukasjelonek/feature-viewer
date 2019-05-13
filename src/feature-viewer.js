@@ -576,9 +576,13 @@ var FeatureViewer = (function () {
                 object.shift = shift * 10 +5;
             },
             multipleRect: function (object) {
-                object.data.sort(function (a, b) {
-                    return a.x - b.x;
-                });
+                if ('sort' in object) {
+                    object.data.sort(object.sort)
+                } else {
+                    object.data.sort(function (a, b) {
+                        return a.x - b.x
+                    })
+                }
                 level = addLevel(object.data);
                 pathLevel = level * 10 + 5;
             }
