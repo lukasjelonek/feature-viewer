@@ -682,7 +682,7 @@ var FeatureViewer = (function () {
                     .data(seq)
                     .enter()
                     .append("text")
-                    .attr("clip-path", "url(#clip)")
+                    
                     .attr("class", "AA")
                     .attr("text-anchor", "middle")
                     .attr("x", function (d, i) {
@@ -702,7 +702,7 @@ var FeatureViewer = (function () {
                         .data([[{x:1,y:12},{x:fvLength,y:12}]])
                         .enter()
                         .append("path")
-                        .attr("clip-path", "url(#clip)")
+                        
                         .attr("d", line)
                         .attr("class","sequenceLine")
                         .style("z-index", "0")
@@ -728,7 +728,7 @@ var FeatureViewer = (function () {
 
                 var rectsPro = svgContainer.append("g")
                     .attr("class", "rectangle")
-                    .attr("clip-path", "url(#clip)")
+                    
                     .attr("transform", "translate(0," + position + ")");
                 
                 var dataline=[];
@@ -835,7 +835,7 @@ var FeatureViewer = (function () {
                     .data(dataline)
                     .enter()
                     .append("path")
-                    .attr("clip-path", "url(#clip)")
+                    
                     .attr("d", line)
                     .attr("class", "line" + object.className)
                     .style("z-index", "0")
@@ -846,7 +846,7 @@ var FeatureViewer = (function () {
                     .data(object.data)
                     .enter()
                     .append("rect")
-                    .attr("clip-path", "url(#clip)")
+                    
                     .attr("class", "element " + object.className)
                     .attr("id", function (d) {
                         return "f" + d.id
@@ -883,7 +883,7 @@ var FeatureViewer = (function () {
                     .data(dataline)
                     .enter()
                     .append("path")
-                    .attr("clip-path", "url(#clip)")
+                    
                     .attr("d", lineBond)
                     .attr("class", "line" + object.className)
                     .style("z-index", "0")
@@ -894,7 +894,7 @@ var FeatureViewer = (function () {
                     .data(object.data)
                     .enter()
                     .append("path")
-                    .attr("clip-path", "url(#clip)")
+                    
                     .attr("class", "element " + object.className)
                     .attr("id", function (d) {
                         return "f" + d[0].id
@@ -928,7 +928,7 @@ var FeatureViewer = (function () {
                     .data(dataline)
                     .enter()
                     .append("path")
-                    .attr("clip-path", "url(#clip)")
+                    
                     .attr("d", lineBond)
                     .attr("class", "line" + object.className)
                     .style("z-index", "0")
@@ -939,7 +939,7 @@ var FeatureViewer = (function () {
                     .data(dd)
                     .enter()
                     .append("path")
-                    .attr("clip-path", "url(#clip)")
+                    
                     .attr("class", "element " + object.className + " " + object.className + i)
                     .attr("d", lineGen.interpolate(object.interpolation))
                     .style("fill", object.fill ? shadeBlendConvert(0.6, object.color[i]) || shadeBlendConvert(0.6, "#000") : "none")
@@ -980,7 +980,7 @@ var FeatureViewer = (function () {
                     .data(object.data)
                     .enter()
                     .append("rect")
-                    .attr("clip-path", "url(#clip)")
+                    
                     .attr("class", "element " + object.className)
                     .attr("id", function (d) {
                         return "f" + d.id
