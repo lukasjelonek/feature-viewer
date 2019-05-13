@@ -123,11 +123,11 @@ var FeatureViewer = (function () {
                     if (rightside) {
                         tooltipDiv = d3.select(div)
                             .append('div')
-                            .attr('class', 'tooltip-right');
+                            .attr('class', 'tooltip1 tooltip-right');
                     } else {
                         tooltipDiv = d3.select(div)
                             .append('div')
-                            .attr('class', 'tooltip-left');
+                            .attr('class', 'tooltip1 tooltip-left');
                         tooltipDiv.style({
                             left: (absoluteMousePos[0] - 15) + 'px'
                         });
