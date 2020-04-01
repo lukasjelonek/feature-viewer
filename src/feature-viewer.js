@@ -757,7 +757,7 @@ var FeatureViewer = (function () {
                     })
                     .attr("width", rectWidth2)
                     .attr("height", rectHeight)
-                    .style("fill", function(d) { return d.color || object.color })
+                    .style("fill", function(d) { return color(d) || object.color })
                     .style("z-index", "13")
                     .call(d3.helper.tooltip(object));
 
@@ -827,7 +827,7 @@ var FeatureViewer = (function () {
                         else return scaling(d.x + 0.4) - scaling(d.x - 0.4);
                     })
                     .attr("height", 12)
-                    .style("fill", function(d) {return d.color ||  object.color})
+                    .style("fill", function(d) {return color(d) ||  object.color})
                     .style("z-index", "3")
                     .call(d3.helper.tooltip(object));
 
@@ -958,7 +958,7 @@ var FeatureViewer = (function () {
                     })
                     .attr("width", rectWidth)
                     .attr("height", rectHeight)
-                    .style("fill", function(d) { return d.color || object.color })
+                    .style("fill", function(d) { return color(d) || object.color })
                     .style("z-index", "13")
                     .call(d3.helper.tooltip(object));
 
@@ -1153,6 +1153,17 @@ var FeatureViewer = (function () {
         var brush = d3.svg.brush()
             .x(scaling)
             .on("brushend", brushend);
+
+        function color(data) {
+            if ('color' in data) {
+                if (typeof(data.color) === "function") {
+                    return data.color(data);
+                } else {
+                    return data.color;
+                }
+            }
+            return undefined;
+        }
 
         function addBrush() {
             svgContainer.append("g")
